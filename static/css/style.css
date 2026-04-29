@@ -1,8 +1,4 @@
-/* ============================================================
-   AI FACEAGE — Premium Design System v2
-   Fonts: Syne (display) + DM Sans (body)
-   Theme: Deep Space Futuristic with Neon Cyan/Violet Accents
-   ============================================================ */
+
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap');
 
 /* ── CSS Variables ── */
@@ -21,8 +17,8 @@
   --pink:      #ec4899;
   --green:     #10b981;
   --red:       #ef4444;
-  --grad:      linear-gradient(135deg, #8b5cf6 0%, #22d3ee 100%);
-  --grad2:     linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+  --grad:      linear-gradient(135deg, #d5c7f5 0%, #74dcec 100%);
+  --grad2:     linear-gradient(135deg, #ec4899 0%, #cabbed 100%);
   --shadow:    0 24px 64px rgba(0,0,0,.5);
   --shadow-c:  0 0 40px rgba(34,211,238,.2);
   --r:         18px;
