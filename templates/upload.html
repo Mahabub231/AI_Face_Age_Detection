@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="page-hero">
+  <h1>Upload <span class="grad-text">Face Image</span></h1>
+  <p>Drag &amp; drop or choose a photo. Supported formats: JPG, JPEG, PNG, WEBP.</p>
+</section>
+
+<div class="upload-layout container">
+  <form method="POST" enctype="multipart/form-data" class="upload-box glass" id="uploadForm">
+    <input id="imageInput" type="file" name="image" accept="image/*" required hidden>
+
+    <label for="imageInput" class="drop-zone" id="dropZone">
+      <div class="drop-icon">📤</div>
+      <h3>Drag &amp; drop your image here</h3>
+      <p>Click to browse or drop a file</p>
+      <span class="btn primary" style="pointer-events:none;">Choose Image</span>
+    </label>
+
+    <div class="analyzing" id="analyzing">
+      <span class="loader"></span>
+      <b style="display:block;margin-top:12px;font-size:15px;">Analyzing face…</b>
+      <p style="color:var(--muted);font-size:13px;margin-top:6px;">This may take a moment</p>
+    </div>
+
+    <button class="btn primary wide" type="submit" style="margin-top:20px;">🔍 Analyze Image</button>
+  </form>
+
+  <div class="preview-panel card">
+    <h2>Image Preview</h2>
+    <img id="previewImage" class="preview-image" alt="Preview">
+    <p id="previewText" style="color:var(--muted);text-align:center;padding:40px 20px;font-size:14px;">No image selected yet.<br><span style="font-size:36px;">🖼️</span></p>
+    <div id="fileInfo" style="display:none;margin-top:16px;padding:14px;background:var(--card);border-radius:12px;border:1px solid var(--line);">
+      <p style="font-size:13px;color:var(--muted);margin:0;" id="fileName"></p>
+      <p style="font-size:13px;color:var(--muted);margin:4px 0 0;" id="fileSize"></p>
+    </div>
+  </div>
+</div>
+{% endblock %}

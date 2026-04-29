@@ -1,0 +1,4 @@
+{
+  "architectures": ["AgeGenderViTModel"],
+  "model_type": "vit"
+}

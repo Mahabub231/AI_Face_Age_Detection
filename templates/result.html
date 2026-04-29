@@ -1,0 +1,229 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="page-hero">
+  <h1>Detection <span class="grad-text">Result</span></h1>
+  <p>AI-powered multi-face age &amp; gender analysis.</p>
+</section>
+
+<div class="result-page container">
+
+  <!-- ══ LEFT: Image ══ -->
+  <div>
+    <div class="image-box glass">
+      <img src="{{ pred.image_url }}" alt="Analyzed image">
+    </div>
+
+    {% if pred.message %}
+    <div class="msg-banner {% if pred.face_count == 0 %}no-face{% endif %}">
+      {{ '⚠️' if pred.face_count == 0 else '✅' }} {{ pred.message }}
+    </div>
+    {% endif %}
+
+    <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;">
+      <a class="btn primary" href="/download-result/{{ pred.id }}">⬇ Download Boxed Image</a>
+      <form method="POST" action="/delete-result/{{ pred.id }}" class="inline">
+        <button class="danger big" type="submit">🗑 Delete</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ══ RIGHT: Details ══ -->
+  <div class="card details">
+    <h2>Face Analysis Details</h2>
+
+    <div class="detail-row">
+      <span class="label">AI Mode</span>
+      <span class="value"><span class="pill">{{ pred.mode or 'opencv' }}</span></span>
+    </div>
+    <div class="detail-row">
+      <span class="label">Faces Detected</span>
+      <span class="value" style="font-size:24px;font-weight:800;font-family:'Syne',sans-serif;">{{ pred.face_count }}</span>
+    </div>
+    <div class="detail-row">
+      <span class="label">Average Age</span>
+      <span class="value big">{{ pred.predicted_age }} yrs</span>
+    </div>
+    {% if pred.gender %}
+    <div class="detail-row">
+      <span class="label">Gender Count</span>
+      <span class="value">
+        {% for part in pred.gender.split(', ') %}
+          <span class="pill {% if 'Female' in part %}pink{% elif 'Male' in part %}blue{% endif %}" style="margin-right:4px;">
+            {% if 'Male' in part %}♂{% elif 'Female' in part %}♀{% endif %}{{ part }}
+          </span>
+        {% endfor %}
+      </span>
+    </div>
+    {% endif %}
+    <div class="detail-row">
+      <span class="label">Analyzed On</span>
+      <span class="value" style="font-size:13px;color:var(--muted);">{{ pred.created_at.strftime('%d %B %Y, %I:%M %p') }}</span>
+    </div>
+
+    <a class="btn secondary wide" href="/dashboard" style="margin-top:20px;">← Back to Dashboard</a>
+  </div>
+</div>
+
+<!-- ══ FACE RESULT TABLE (full width below) ══ -->
+{% if face_details %}
+<div class="container face-table-section">
+  <h2 class="table-title" style="margin-bottom:20px;">
+    Each Face Result
+    <span class="pill" style="margin-left:10px;font-size:13px;">{{ face_details|length }} face{{ 's' if face_details|length != 1 }}</span>
+  </h2>
+
+  <div class="face-result-grid">
+    {% for f in face_details %}
+    <div class="face-result-card glass">
+
+      <!-- Crop image -->
+      <div class="frc-image">
+        {% if f.crop_url %}
+        <img src="{{ f.crop_url }}" alt="Face {{ f.face }}">
+        {% else %}
+        <div class="frc-placeholder">{{ f.face }}</div>
+        {% endif %}
+        <div class="frc-badge">#{{ f.face }}</div>
+      </div>
+
+      <!-- Details -->
+      <div class="frc-body">
+        <!-- Gender pill -->
+        <div class="frc-gender {{ 'frc-female' if f.gender == 'Female' else 'frc-male' }}">
+          {{ '♀ Female' if f.gender == 'Female' else '♂ Male' }}
+        </div>
+
+        <div class="frc-age">{{ f.age_group }}</div>
+        <div class="frc-age-num">~{{ f.age }} <small>yrs</small></div>
+
+        <!-- Confidence bar -->
+        <div class="frc-conf-label">
+          <span>Face Confidence</span><b>{{ f.confidence }}%</b>
+        </div>
+        <div class="frc-conf-bar">
+          <div class="frc-conf-fill" style="width:{{ f.confidence }}%"></div>
+        </div>
+      </div>
+
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+
+<style>
+/* ── message banner ─────────────────────── */
+.msg-banner {
+  margin-top:14px; padding:12px 16px; border-radius:14px;
+  background:rgba(16,185,129,.1); border:1px solid rgba(16,185,129,.3);
+  color:var(--green); font-size:14px; font-weight:600;
+}
+.msg-banner.no-face {
+  background:rgba(239,68,68,.1); border-color:rgba(239,68,68,.3); color:var(--red);
+}
+
+/* ── face result grid ─────────────────────── */
+.face-table-section { padding-top:0; padding-bottom:80px; }
+
+.face-result-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 18px;
+}
+
+/* ── single face card ─────────────────────── */
+.face-result-card {
+  border-radius: var(--r2);
+  overflow: hidden;
+  transition: transform .22s, box-shadow .22s;
+  display: flex;
+  flex-direction: column;
+}
+.face-result-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow), var(--shadow-c);
+}
+
+/* Image area */
+.frc-image {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: var(--bg3);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.frc-image img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.frc-placeholder {
+  width: 100%; height: 100%;
+  display: grid; place-items: center;
+  font-family: 'Syne', sans-serif;
+  font-size: 48px; font-weight: 800;
+  background: var(--grad); color: #fff;
+}
+.frc-badge {
+  position: absolute; bottom: 8px; right: 8px;
+  background: var(--grad);
+  color: #fff; font-size: 12px; font-weight: 700;
+  padding: 3px 10px; border-radius: 999px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.4);
+}
+
+/* Body */
+.frc-body {
+  padding: 16px;
+  display: flex; flex-direction: column; gap: 6px;
+  flex: 1;
+}
+.frc-gender {
+  display: inline-block;
+  padding: 5px 14px; border-radius: 999px;
+  font-size: 13px; font-weight: 700;
+  align-self: flex-start;
+}
+.frc-male   { background:rgba(59,130,246,.15); border:1px solid rgba(59,130,246,.35); color:#60a5fa; }
+.frc-female { background:rgba(236,72,153,.15); border:1px solid rgba(236,72,153,.35); color:#ec4899; }
+
+.frc-age     { font-size:12px; color:var(--muted); margin-top:4px; }
+.frc-age-num {
+  font-family: 'Syne', sans-serif; font-size: 26px; font-weight: 800;
+  background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  line-height: 1.1;
+}
+.frc-age-num small { font-size: 14px; }
+
+.frc-conf-label {
+  display: flex; justify-content: space-between;
+  font-size: 12px; color: var(--muted); margin-top: 6px;
+}
+.frc-conf-bar {
+  height: 7px; background: var(--line); border-radius: 999px; overflow: hidden;
+}
+.frc-conf-fill {
+  height: 100%; background: var(--grad); border-radius: 999px;
+  transition: width 1.1s ease;
+}
+
+/* gender pills in detail row */
+.pill.pink { background:rgba(236,72,153,.15); border-color:rgba(236,72,153,.35); color:#ec4899; }
+.pill.blue { background:rgba(59,130,246,.15); border-color:rgba(59,130,246,.35); color:#60a5fa; }
+
+/* responsive: 2-col on small screens */
+@media (max-width: 600px) {
+  .face-result-grid { grid-template-columns: repeat(2, 1fr); gap:12px; }
+}
+</style>
+
+<script>
+window.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.frc-conf-fill').forEach(el => {
+    const w = el.style.width; el.style.width = '0';
+    setTimeout(() => { el.style.width = w; }, 400 + Math.random()*200);
+  });
+});
+</script>
+{% endblock %}

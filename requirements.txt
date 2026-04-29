@@ -1,0 +1,14 @@
+flask>=3.0
+flask-sqlalchemy>=3.1
+werkzeug>=3.0
+pillow>=10.0
+opencv-python-headless>=4.8
+numpy<2
+python-dotenv>=1.0
+cloudinary>=1.36
+psycopg2-binary>=2.9
+gunicorn>=21.0
+tqdm>=4.66
+# PyTorch (optional — only needed if AGE_AI_MODE=pytorch)
+# torch>=2.0
+# torchvision>=0.15

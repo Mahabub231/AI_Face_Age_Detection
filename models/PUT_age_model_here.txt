@@ -1,0 +1,7 @@
+Place your trained model file here as:
+    models/best_utkface_model.pth
+
+Options:
+  A) Use AGE_AI_MODE=opencv (default) — no model file needed.
+  B) Train your own: python train_utkface.py --data_dir dataset/UTKFace
+  C) Rename your downloaded model: cp age_model.pth models/best_utkface_model.pth
