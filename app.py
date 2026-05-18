@@ -409,4 +409,4 @@ if __name__ == "__main__":
     if DEBUG:
         print(f"   DB: {SQLALCHEMY_DATABASE_URI[:40]}...")
 
-    app.run(debug=DEBUG, host="0.0.0.0", port=5000)
+    app.run(debug=DEBUG, host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
