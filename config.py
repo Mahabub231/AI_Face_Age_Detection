@@ -9,10 +9,10 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 SECRET_KEY = os.getenv("SECRET_KEY", "dev-secret-change-in-production")
 DEBUG = os.getenv("DEBUG", "False").lower() == "true"
 
-# ── AI Mode ─────────────────────────────────────────────
+# ── AI Mode ──────────────────────────────────────────────
 AGE_AI_MODE = os.getenv("AGE_AI_MODE", "opencv")
 
-# ── Database ────────────────────────────────────────────
+# ── Database ─────────────────────────────────────────────
 db_url = os.getenv("DATABASE_URL", "").strip()
 
 if db_url:
@@ -24,30 +24,28 @@ if db_url:
         db_url = f"{db_url}{joiner}sslmode=require"
 
     SQLALCHEMY_DATABASE_URI = db_url
-else:
-    # fallback (important for safety)
-    SQLALCHEMY_DATABASE_URI = "sqlite:///" + os.path.join(BASE_DIR, "database.db")
 
-# REQUIRED (missing before)
-SQLALCHEMY_TRACK_MODIFICATIONS = False
-
-if db_url:
     SQLALCHEMY_ENGINE_OPTIONS = {
         "pool_pre_ping": True,
         "pool_recycle": 280,
     }
+
 else:
+    SQLALCHEMY_DATABASE_URI = "sqlite:///" + os.path.join(BASE_DIR, "database.db")
+
     SQLALCHEMY_ENGINE_OPTIONS = {}
 
-# ── Upload ──────────────────────────────────────────────
+SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+# ── Upload ───────────────────────────────────────────────
 UPLOAD_FOLDER = os.path.join(BASE_DIR, "static", "uploads")
 ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "webp"}
 
-# ── Supabase ────────────────────────────────────────────
+# ── Supabase ─────────────────────────────────────────────
 SUPABASE_URL = os.getenv("SUPABASE_URL", "")
 SUPABASE_KEY = os.getenv("SUPABASE_KEY", "")
 
-# ── Cloudinary ──────────────────────────────────────────
+# ── Cloudinary ───────────────────────────────────────────
 CLOUDINARY_CLOUD_NAME = os.getenv("CLOUDINARY_CLOUD_NAME", "").strip()
 CLOUDINARY_API_KEY = os.getenv("CLOUDINARY_API_KEY", "").strip()
 CLOUDINARY_API_SECRET = os.getenv("CLOUDINARY_API_SECRET", "").strip()
