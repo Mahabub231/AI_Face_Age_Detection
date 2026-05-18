@@ -31,10 +31,13 @@ else:
 # REQUIRED (missing before)
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
-SQLALCHEMY_ENGINE_OPTIONS = {
-    "pool_pre_ping": True,
-    "pool_recycle": 280,
-}
+if db_url:
+    SQLALCHEMY_ENGINE_OPTIONS = {
+        "pool_pre_ping": True,
+        "pool_recycle": 280,
+    }
+else:
+    SQLALCHEMY_ENGINE_OPTIONS = {}
 
 # ── Upload ──────────────────────────────────────────────
 UPLOAD_FOLDER = os.path.join(BASE_DIR, "static", "uploads")
