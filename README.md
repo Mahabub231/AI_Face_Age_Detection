@@ -1,4 +1,8 @@
 # 🧠 AI FaceAge — Deep Learning Age Detection
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![Flask](https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white)
+![OpenCV](https://img.shields.io/badge/OpenCV-27338e?style=for-the-badge&logo=opencv&logoColor=white)
+![Render](https://img.shields.io/badge/Deploy-Render-46E3B7?style=for-the-badge&logo=render&logoColor=white)
 
 Face age detection using OpenCV DNN (Caffe models) with multi-face support.
 
@@ -100,7 +104,37 @@ age-ai-faceage/
 ├── static/uploads/
 └── templates/
 ```
+## 🌐 Live Demo
 
+[![Live Demo](https://img.shields.io/badge/Live_Demo-000?style=for-the-badge&logo=netlify&logoColor=white)](https://aifaceage.netlify.app/)
+
+---
+
+## 📸 Screenshots
+
+### 🏠 Home Page
+![Home](Result_screenshorts/Home%20page.png)
+
+### ⚙️ Admin Dashboard
+![Admin Dashboard](Result_screenshorts/Admin_Dashboard.png)
+
+### 📂 Admin Upload Check
+![Upload Check](Result_screenshorts/Admin_check_last_upload.png)
+
+### 👥 Admin User Check
+![User Check](Result_screenshorts/admin_user_check.png)
+
+### 🕘 Admin History
+![History](Result_screenshorts/admin_history_check.png)
+
+### 🤖 AI Detection Result 1
+![Check1](Result_screenshorts/Check_01.jpeg)
+
+### 🤖 AI Detection Result 2
+![Check2](Result_screenshorts/check_2.jpeg)
+
+### 🤖 AI Detection Result 3
+![Check3](Result_screenshorts/check_3.jpeg)
 ---
 
 ## 👥 Team — Green University of Bangladesh, CSE-404
