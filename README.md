@@ -113,7 +113,7 @@ age-ai-faceage/
 ## 📸 Screenshots
 
 ### 🏠 Home Page
-![Home](Result_screenshorts/Home%20page.png)
+![Home](Result_screenshorts/Home_page.png)
 
 ### ⚙️ Admin Dashboard
 ![Admin Dashboard](Result_screenshorts/Admin_Dashboard.png)
@@ -135,6 +135,7 @@ age-ai-faceage/
 
 ### 🤖 AI Detection Result 3
 ![Check3](Result_screenshorts/check_3.jpeg)
+
 ---
 
 ## 👥 Team — Green University of Bangladesh, CSE-404
